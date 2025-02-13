@@ -5,7 +5,7 @@ using System;
 
 namespace WarriorsFightToDeath
 {
-    class Combat : Warriors
+    class Combat 
     {
         // Save original stats for resetting after each action
       
@@ -15,6 +15,7 @@ namespace WarriorsFightToDeath
             // Basic combat loop: Alternate turns between Thor and Loki until one of them dies
             while (thor.IsAlive && loki.IsAlive)
             {
+                
                 // Thor's turn
                 PerformAction(thor, loki);
 
@@ -36,7 +37,7 @@ namespace WarriorsFightToDeath
         }
 
         // Perform an action for each warrior
-        private void PerformAction(Warriors attacker, Warriors defender)
+        public void PerformAction(Warriors attacker, Warriors defender)
         {
             // Save original stats before modifying them
 
@@ -59,6 +60,7 @@ namespace WarriorsFightToDeath
                 {
                     thor.AwakeningRune(defender);
                 }
+                attacker.ResetStats();
             }
             else if (attacker is MagicWarrior)
             {
@@ -80,9 +82,8 @@ namespace WarriorsFightToDeath
                 {
                     loki.Heal();
                 }
+                attacker.ResetStats();
             }
-
-            ResetStats();
             // Print both warriors' status after each action
             Console.WriteLine($"{attacker.Name}: Health = {attacker.SHealth}, Attack = {attacker.SAttack}, Defense = {attacker.SDefense}");
             Console.WriteLine($"{defender.Name}: Health = {defender.SHealth}, Attack = {defender.SAttack}, Defense = {defender.SDefense}");

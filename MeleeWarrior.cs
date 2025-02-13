@@ -19,10 +19,12 @@ namespace WarriorsFightToDeath
         public void AwakeningRune(Warriors target)
         {
             int totalDamage = SAttack*2 - target.SDefense;
+            SHealth += 100;
 
             if (totalDamage < 0) totalDamage = 0;
             Console.WriteLine($"{Name} uses Awakening Rune on {target.Name}, dealing {totalDamage} damage!");
             target.TakeDamage(totalDamage);
+            SHealth -= 100;
         }
 
         // TryToStun: Thor tries to stun the enemy, reducing their ability to act
@@ -32,14 +34,12 @@ namespace WarriorsFightToDeath
             {
                 Console.WriteLine($"{Name} attempts to stun {target.Name}!");
                 target.IsStunned = true;  // Set stun status
-                target.SDefense = -20;  // Reduce defense to make it easier to hit
                 Console.WriteLine($"{target.Name} is stunned and cannot act next turn!");
             }
             else
             {
                 Console.WriteLine($"{Name} fails to stun {target.Name}.");
-                target.IsStunned = false;
-                target.SAttack *= 2;
+                target.SHealth += 100;
             }
         }
 

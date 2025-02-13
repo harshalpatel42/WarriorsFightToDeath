@@ -35,6 +35,7 @@ namespace WarriorsFightToDeath
             originalHealth = health;
             originalAttack = attack;
             originalDefense = def;
+            IsStunned = false;
         }
 
 
@@ -44,7 +45,7 @@ namespace WarriorsFightToDeath
             int damage = SAttack - target.SDefense;
             if (damage < 0) damage = 0;
 
-            Console.WriteLine($"{Name} attacks {target.Name} for {damage} damage!");
+            Console.WriteLine($"{Name} attacks {target.Name} for {SAttack} damage! our of which {target.SDefense} was blocked");
             target.TakeDamage(damage);
 
         }
@@ -60,11 +61,11 @@ namespace WarriorsFightToDeath
         }
 
         // Reset stats to original state after each turn
-        public virtual void ResetStats()
+        public void ResetStats()
         {
-            SHealth = originalHealth;
             SAttack = originalAttack;
             SDefense = originalDefense;
+            IsStunned = false;
         }
     }
 }

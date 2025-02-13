@@ -25,25 +25,24 @@ namespace WarriorsFightToDeath
         public void CreateIllusion()
         {
             //this is to randomize the number of clones created
-            numberOfClones = rand.Next(1, 4);
-            SHealth *= numberOfClones;
-            SAttack *= numberOfClones;
-            Console.WriteLine($"{Name} creates an illusion, increasing health by number of clones he created!");
+            Console.WriteLine($"{Name} creates an illusion, increasing attack based on 3 of the loki clones");
+
+            numberOfClones = rand.Next(3, 4);
         }
 
         // Healing: Loki can heal a portion of his health.
         public void Heal()
         {
             //we'll also increase the healing based on the number of clones created
-            int healAmount = 10;
+            int healAmount = 100;
             SHealth += healAmount;
             Console.WriteLine($"{Name} heals for {healAmount} health!");
         }
 
- 
 
 
-        // Attack Method for Loki: Override if needed, considering teleport and other abilities.
+
+        // Attack Method for Loki: Override if needed, considering teleport and other abilities.  
         public override void Attack(Warriors target)
         {
             if (IsStunned)
@@ -53,16 +52,24 @@ namespace WarriorsFightToDeath
                 return;
             }
 
-            // If Loki teleports, skip damage calculation
+            // If Loki has clones, he and all clones attack together
             if (numberOfClones > 0)
             {
-                Console.WriteLine($"{Name} avoids damage completely by teleporting!");
-                return; // Skip damage
-            }
+                int totalDamage = SAttack * (numberOfClones + 1); // +1 to include Loki himself
+                Console.WriteLine($"{Name} and his {numberOfClones} clones attack {target.Name} for {totalDamage} total damage!");
+                target.TakeDamage(totalDamage);
 
-            // Default attack logic (if no teleport or special condition)
-            base.Attack(target);
+                // Clones disappear after attacking
+                numberOfClones = 0;
+            }
+            else
+            {
+                // Normal attack if there are no clones
+                Console.WriteLine($"{Name} attacks {target.Name} for {SAttack} damage!");
+                target.TakeDamage(SAttack);
+            }
         }
+
 
     }
 }

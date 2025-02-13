@@ -18,7 +18,7 @@ namespace WarriorsFightToDeath
         {
             // Create the warriors
             MeleeWarrior thor = new MeleeWarrior("Thor", 650, 60, 15);  // Thor with health, attack, and defense values
-            MagicWarrior loki = new MagicWarrior("Loki", 250, 40, 15);   // Loki with health, attack, and defense values
+            MagicWarrior loki = new MagicWarrior("Loki", 250, 50, 15);   // Loki with health, attack, and defense values
 
             // Create the combat system and start the battle
             Combat combat = new Combat();
