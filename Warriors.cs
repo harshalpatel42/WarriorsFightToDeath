@@ -18,9 +18,9 @@ namespace WarriorsFightToDeath
         public bool IsStunned { get; set; }
 
         // Store original stats for resetting
-        public int originalHealth { get; set; }
-        public int originalAttack { get; set; }
-        public int originalDefense { get; set; }
+        public int originalHealth;
+        public int originalAttack;
+        public int originalDefense;
 
         //constructor for the warriors
         public Warriors(string name = "Yggsguardian", int health = 0, int attack = 0, int def = 0)

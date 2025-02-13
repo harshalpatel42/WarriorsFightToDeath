@@ -22,23 +22,20 @@ namespace WarriorsFightToDeath
         }
 
         // Illusions: Loki creates illusions that increase defense and reduce chance of being stunned.
-        public int CreateIllusion()
+        public void CreateIllusion()
         {
             //this is to randomize the number of clones created
             numberOfClones = rand.Next(1, 4);
-            SHealth += 5*numberOfClones;
-
-            //attack increases based on the number of clones created
+            SHealth *= numberOfClones;
             SAttack *= numberOfClones;
-            Console.WriteLine($"{Name} creates an illusion, increasing defense by 5!");
-            return numberOfClones;
+            Console.WriteLine($"{Name} creates an illusion, increasing health by number of clones he created!");
         }
 
         // Healing: Loki can heal a portion of his health.
         public void Heal()
         {
             //we'll also increase the healing based on the number of clones created
-            int healAmount = 10 * CreateIllusion();
+            int healAmount = 10;
             SHealth += healAmount;
             Console.WriteLine($"{Name} heals for {healAmount} health!");
         }
@@ -67,14 +64,5 @@ namespace WarriorsFightToDeath
             base.Attack(target);
         }
 
-
-        // Reset stats after each turn
-        public override void ResetStats()
-        {
-            base.ResetStats();  // Reset to original stats
-            // After using illusions, reset the stats for next turn
-            SAttack /= numberOfClones;  // Adjust back attack based on number of clones
-            SHealth -= 5 * numberOfClones;  // Adjust health after illusion
-        }
     }
 }

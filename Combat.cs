@@ -5,23 +5,10 @@ using System;
 
 namespace WarriorsFightToDeath
 {
-
     class Combat : Warriors
     {
         // Save original stats for resetting after each action
-        private void SaveOriginalStats(Warriors warrior)
-        {
-            warrior.originalHealth = warrior.SHealth;
-            warrior.originalAttack = warrior.SAttack;
-            warrior.originalDefense = warrior.SDefense;
-        }
-
-        private void RestoreOriginalStats(Warriors warrior)
-        {
-            warrior.SHealth = warrior.originalHealth;
-            warrior.SAttack = warrior.originalAttack;
-            warrior.SDefense = warrior.originalDefense;
-        }
+      
 
         public void StartBattle(MeleeWarrior thor, MagicWarrior loki)
         {
@@ -31,10 +18,20 @@ namespace WarriorsFightToDeath
                 // Thor's turn
                 PerformAction(thor, loki);
 
-                if (!loki.IsAlive) break;
+                if (!loki.IsAlive) // Check if Loki is dead after Thor's turn
+                {
+                    Console.WriteLine($"{loki.Name} has died! {thor.Name} wins!");
+                    break; // Exit the loop if Loki is dead
+                }
 
                 // Loki's turn
                 PerformAction(loki, thor);
+
+                if (!thor.IsAlive) // Check if Thor is dead after Loki's turn
+                {
+                    Console.WriteLine($"{thor.Name} has died! {loki.Name} wins!");
+                    break; // Exit the loop if Thor is dead
+                }
             }
         }
 
@@ -42,8 +39,6 @@ namespace WarriorsFightToDeath
         private void PerformAction(Warriors attacker, Warriors defender)
         {
             // Save original stats before modifying them
-            SaveOriginalStats(attacker);
-            SaveOriginalStats(defender);
 
             if (attacker is MeleeWarrior)
             {
@@ -79,6 +74,7 @@ namespace WarriorsFightToDeath
                 else if (actionChoice == 1)
                 {
                     loki.CreateIllusion();
+                    loki.Attack(defender);
                 }
                 else
                 {
@@ -86,10 +82,7 @@ namespace WarriorsFightToDeath
                 }
             }
 
-            // Restore stats to their original values after the action is performed
-            RestoreOriginalStats(attacker);
-            RestoreOriginalStats(defender);
-
+            ResetStats();
             // Print both warriors' status after each action
             Console.WriteLine($"{attacker.Name}: Health = {attacker.SHealth}, Attack = {attacker.SAttack}, Defense = {attacker.SDefense}");
             Console.WriteLine($"{defender.Name}: Health = {defender.SHealth}, Attack = {defender.SAttack}, Defense = {defender.SDefense}");
@@ -97,4 +90,3 @@ namespace WarriorsFightToDeath
         }
     }
 }
-

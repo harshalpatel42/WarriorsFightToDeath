@@ -21,7 +21,7 @@ namespace WarriorsFightToDeath
             int totalDamage = SAttack*2 - target.SDefense;
 
             if (totalDamage < 0) totalDamage = 0;
-            Console.WriteLine($"{Name} uses ThunderStrike on {target.Name}, dealing {totalDamage} damage!");
+            Console.WriteLine($"{Name} uses Awakening Rune on {target.Name}, dealing {totalDamage} damage!");
             target.TakeDamage(totalDamage);
         }
 
@@ -32,11 +32,14 @@ namespace WarriorsFightToDeath
             {
                 Console.WriteLine($"{Name} attempts to stun {target.Name}!");
                 target.IsStunned = true;  // Set stun status
+                target.SDefense = -20;  // Reduce defense to make it easier to hit
                 Console.WriteLine($"{target.Name} is stunned and cannot act next turn!");
             }
             else
             {
                 Console.WriteLine($"{Name} fails to stun {target.Name}.");
+                target.IsStunned = false;
+                target.SAttack *= 2;
             }
         }
 
